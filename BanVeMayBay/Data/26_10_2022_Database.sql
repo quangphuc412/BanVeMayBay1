@@ -69,13 +69,13 @@ MaMayBay CHAR(20) references MAYBAY(MaMayBay)
 go
 select * from CHUYENBAY
 CREATE TABLE HANGVE(
-MaHangVe char(20) PRIMARY KEY,
+MaHangVe char(30) PRIMARY KEY,
 VECHUYENBAY char(20) REFERENCES CHUYENBAY(MaChuyenBay), -- ví dụ như tuyến tân sơn nhất nội bài ,
 KhoiLuongToiDa int, -----Thêm Khối Lượng tối đa vào HangVe
 DonGia Money
 )
 go
-select * from HANGVE
+
 CREATE TABLE PHIEUDATCHO(
 MaPhieu char(20) PRIMARY KEY,
 ThoiGianDat DATETIME,
@@ -83,7 +83,7 @@ SoGhe char(5),
 HangGhe char(5),
 CHUYENBAY_MaChuyenBay char(20) REFERENCES CHUYENBAY(MaChuyenBay),
 KHACHHANG_CMND CHAR(20) REFERENCES KHACHHANG(CMND),
-MAHANGVE CHAR(20) REFERENCES HANGVE(MaHangVe),
+MAHANGVE CHAR(30) REFERENCES HANGVE(MaHangVe),
 KHOILUONGHANHLI int
 )
 GO
@@ -108,6 +108,7 @@ TinhTrangVe nvarchar(10),
 GO
 select * from VECHUYENBAY
 go
+
 CREATE FUNCTION AUTO_IDNV()
 RETURNS VARCHAR(5)
 AS
@@ -123,6 +124,7 @@ BEGIN
 		END
 	RETURN @ID
 END
+GO
 
 CREATE FUNCTION AUTO_IDHD()
 RETURNS VARCHAR(5)
@@ -139,6 +141,14 @@ BEGIN
 		END
 	RETURN @ID
 END
+GO
+create table HD(
+	MAHD char(5) primary key CONSTRAINT IDHD DEFAULT DBO.AUTO_IDHD(),
+	TenHD char(20)
+)
+insert into HD(TenHD) values('1')
+insert into HD(TenHD) values('2')
+
 
 CREATE FUNCTION AUTO_IDPDC()
 RETURNS VARCHAR(6)
@@ -155,3 +165,21 @@ BEGIN
 		END
 	RETURN @ID
 END
+GO
+
+create table PDC(
+	MaPhieu char(6) primary key CONSTRAINT IDPDC DEFAULT DBO.AUTO_IDPDC(),
+	TenPhieu char(20)
+)
+select * from PDC
+insert into PDC(TenPhieu) values('1')
+insert into PDC(TenPhieu) values('2')
+insert into PDC(TenPhieu) values('3')
+insert into PDC(TenPhieu) values('4')
+insert into PDC(TenPhieu) values('5')
+insert into PDC(TenPhieu) values('6')
+insert into PDC(TenPhieu) values('7')
+insert into PDC(TenPhieu) values('8')
+insert into PDC(TenPhieu) values('9')
+insert into PDC(TenPhieu) values('10')
+insert into PDC(TenPhieu) values('11')

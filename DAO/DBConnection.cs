@@ -27,7 +27,7 @@ namespace DAO
             }
             return connection;
         }
-        public void executeInsertQuery(String query, SqlParameter[] sqlParameter)
+        public bool executeInsertQuery(String query, SqlParameter[] sqlParameter)
         {
             using (SqlCommand sqlCommand = new SqlCommand(query, openConnection()))
             {
@@ -36,10 +36,12 @@ namespace DAO
                 try
                 {
                     sqlCommand.ExecuteNonQuery();
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    return false;
                 }
                 finally
                 {
@@ -47,23 +49,25 @@ namespace DAO
                 }
             }
         }
-        public void executeUpdateOrDeleteQuery(String query, SqlParameter[] sqlParameter)
+        public bool executeUpdateOrDeleteQuery(String query, SqlParameter[] sqlParameter)
         {
             using (SqlCommand sqlCommand = new SqlCommand(query, openConnection()))
             {
                 int i = 0;
-                while (i < sqlParameter.Length)
-                {
-                    sqlCommand.Parameters.AddWithValue(sqlParameter[i].ParameterName, sqlParameter[i].Value);
-                    i++;
-                }
                 try
                 {
+                    while (i < sqlParameter.Length)
+                    {
+                        sqlCommand.Parameters.AddWithValue(sqlParameter[i].ParameterName, sqlParameter[i].Value);
+                        i++;
+                    }
                     sqlCommand.ExecuteNonQuery();
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    return false;
                 }
                 finally
                 {
@@ -78,6 +82,35 @@ namespace DAO
                 DataTable dt = new DataTable();
                 try
                 {
+                    sqlCommand.CommandType = CommandType.Text;
+                    SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
+                    da.Fill(dt);
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return dt;
+            }
+        }
+        public DataTable executeSearchQuery(String query, SqlParameter[] sqlParameter)
+        {
+            using (SqlCommand sqlCommand = new SqlCommand(query, openConnection()))
+            {
+                DataTable dt = new DataTable();
+                int i = 0;
+                try
+                {
+                    while (i < sqlParameter.Length)
+                    {
+                        sqlCommand.Parameters.AddWithValue(sqlParameter[i].ParameterName, sqlParameter[i].Value);
+                        i++;
+                    }
                     sqlCommand.CommandType = CommandType.Text;
                     SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
                     da.Fill(dt);

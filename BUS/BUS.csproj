@@ -46,9 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChuyenBayBUS.cs" />
+    <Compile Include="HangVeBUS.cs" />
+    <Compile Include="MayBayBUS.cs" />
     <Compile Include="NhanVienBUS.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SanBayBUS.cs" />
+    <Compile Include="TuyenBayBUS.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

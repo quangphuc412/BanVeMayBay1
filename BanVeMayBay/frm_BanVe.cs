@@ -16,5 +16,10 @@ namespace BanVeMayBay
         {
             InitializeComponent();
         }
+
+        private void frm_BanVe_Load(object sender, EventArgs e)
+        {
+            txt_MaPhieuDatCho.Enabled = false;
+        }
     }
 }

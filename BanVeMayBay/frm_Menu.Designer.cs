@@ -368,6 +368,7 @@
             this.Controls.Add(this.pnl_Main);
             this.Controls.Add(this.pnl_Top);
             this.Controls.Add(this.pnl_Menu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frm_Menu";
             this.Text = "frm_Menu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
