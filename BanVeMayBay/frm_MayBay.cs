@@ -105,10 +105,8 @@ namespace BanVeMayBay
             if(CheckNhapMB())
             {
                 mb = new MayBay(txt_MaMayBay.Text, txt_LoaiMayBay.Text, Convert.ToInt32(txt_SoGhe.Text));
-                if (mbBUS.ThemMB(mb))
-                {
-                    MessageBox.Show("Thêm máy bay mới thành công!");
-                }
+                mbBUS.ThemMB(mb);
+                //MessageBox.Show("Thêm máy bay mới thành công!");
                 Reset();
                 XemMayBay();
             }    
@@ -122,10 +120,8 @@ namespace BanVeMayBay
             }
             else
             {
-                if (mbBUS.XoaMB(txt_MaMayBay.Text))
-                {
-                    MessageBox.Show("Xóa máy bay thành công!");                  
-                }
+                mbBUS.XoaMB(txt_MaMayBay.Text);
+                //MessageBox.Show("Xóa máy bay thành công!");
                 Reset();
                 XemMayBay();
             }
@@ -136,10 +132,8 @@ namespace BanVeMayBay
             if (CheckNhapMB())
             {
                 mb = new MayBay(txt_MaMayBay.Text, txt_LoaiMayBay.Text, Convert.ToInt32(txt_SoGhe.Text));
-                if (mbBUS.SuaMB(mb))
-                {
-                    MessageBox.Show("Cập nhật máy bay thành công!");
-                }
+                mbBUS.SuaMB(mb);
+                //MessageBox.Show("Cập nhật máy bay thành công!");
                 Reset();
                 XemMayBay();
             }

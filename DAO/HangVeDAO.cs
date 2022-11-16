@@ -12,7 +12,7 @@ namespace DAO
     public class HangVeDAO : DBConnection
     {
         public HangVeDAO() : base() { }
-        public bool ThemHV(HangVe hv)
+        public void ThemHV(HangVe hv)
         {
             const string sql = "ThemHangVe @MaChuyenBay, @HangVe, @KhoiLuongToiDa, @DonGia";
             SqlParameter[] sqlParameters = new SqlParameter[4];
@@ -25,18 +25,18 @@ namespace DAO
             sqlParameters[3] = new SqlParameter("@DonGia", SqlDbType.Money);
             sqlParameters[3].Value = Convert.ToString(hv.Dongia);
 
-            return executeInsertQuery(sql, sqlParameters);
+            executeInsertQuery(sql, sqlParameters);
         }
-        public bool XoaHV(String maHV)
+        public void XoaHV(String maHV)
         {
             const string sql = "XoaHangVe @MaHangVe";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@MaHangVe", SqlDbType.VarChar);
             sqlParameters[0].Value = Convert.ToString(maHV);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
-        public bool SuaHV(HangVe hv)
+        public void SuaHV(HangVe hv)
         {
             const string sql = "SuaHangVe @MaHangVe, @KhoiLuongToiDa, @DonGia";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -47,7 +47,7 @@ namespace DAO
             sqlParameters[2] = new SqlParameter("@DonGia", SqlDbType.Money);
             sqlParameters[2].Value = Convert.ToString(hv.Dongia);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
         public DataTable HienThi()
         {

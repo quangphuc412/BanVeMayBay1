@@ -187,12 +187,10 @@ namespace BanVeMayBay
                 thoigianKH = dtp_ThoiGianKH.Value.Hour.ToString() + ':' + dtp_ThoiGianKH.Value.Minute.ToString() + ':' + dtp_ThoiGianKH.Value.Second.ToString();
                 thoigianden = dtp_ThoiGianDuKienDen.Value.Hour.ToString() + ':' + dtp_ThoiGianDuKienDen.Value.Minute.ToString() + ':' + dtp_ThoiGianDuKienDen.Value.Second.ToString();
                 cb = new ChuyenBay(txt_MaChuyenBay.Text, cb_MaTuyenBay.Text, cb_MaMayBay.Text, dtp_NgayBay.Value, thoigianKH, txt_ThoiGianBay.Text, thoigianden, Convert.ToInt32(txt_SoGheHang1.Text), Convert.ToInt32(txt_SoGheHang2.Text));
-                if (cbBUS.ThemCB(cb))
-                {
-                    MessageBox.Show("Thêm chuyến bay mới thành công!");
-                    Reset();
-                    XemChuyenBay();
-                }
+                cbBUS.ThemCB(cb);
+                //MessageBox.Show("Thêm chuyến bay mới thành công!");
+                Reset();
+                XemChuyenBay();
             }
         }
         private void btn_Xoa_Click(object sender, EventArgs e)
@@ -204,12 +202,10 @@ namespace BanVeMayBay
             }
             else
             {
-                if (cbBUS.XoaCB(txt_MaChuyenBay.Text))
-                {
-                    MessageBox.Show("Xóa chuyến bay thành công!");
-                    Reset();
-                    XemChuyenBay();
-                }
+                cbBUS.XoaCB(txt_MaChuyenBay.Text);
+                //MessageBox.Show("Xóa chuyến bay thành công!");
+                Reset();
+                XemChuyenBay();
             }
         }
         private void btn_Sua_Click(object sender, EventArgs e)
@@ -226,12 +222,10 @@ namespace BanVeMayBay
                 thoigianden = dtp_ThoiGianDuKienDen.Value.Hour.ToString() + ':' + dtp_ThoiGianDuKienDen.Value.Minute.ToString() + ':' + dtp_ThoiGianDuKienDen.Value.Second.ToString();
                 cb = new ChuyenBay(txt_MaChuyenBay.Text, cb_MaTuyenBay.Text, cb_MaMayBay.Text, dtp_NgayBay.Value, thoigianKH, txt_ThoiGianBay.Text, thoigianden, Convert.ToInt32(txt_SoGheHang1.Text), Convert.ToInt32(txt_SoGheHang2.Text));
 
-                if (cbBUS.SuaCB(cb))
-                {
-                    MessageBox.Show("Cập nhật chuyến bay thành công!");
-                    Reset();
-                    XemChuyenBay();
-                }
+                cbBUS.SuaCB(cb);
+                //MessageBox.Show("Cập nhật chuyến bay thành công!");
+                Reset();
+                XemChuyenBay();
             }
         }
         private void btn_TimKiem_Click(object sender, EventArgs e)

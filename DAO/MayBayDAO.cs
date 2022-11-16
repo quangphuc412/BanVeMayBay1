@@ -12,7 +12,7 @@ namespace DAO
     public class MayBayDAO : DBConnection
     {
         public MayBayDAO() : base() { }
-        public bool ThemMB(MayBay mb)
+        public void ThemMB(MayBay mb)
         {
             const string sql = "ThemMayBay @MaMayBay, @TenMayBay, @SoGhe";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -23,18 +23,18 @@ namespace DAO
             sqlParameters[2] = new SqlParameter("@SoGhe", SqlDbType.Int);
             sqlParameters[2].Value = Convert.ToString(mb.Soghe);
 
-            return executeInsertQuery(sql, sqlParameters);
+            executeInsertQuery(sql, sqlParameters);
         }
-        public bool XoaMB(String maMB)
+        public void XoaMB(String maMB)
         {
             const string sql = "XoaMayBay @MaMayBay";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@MaMayBay", SqlDbType.VarChar);
             sqlParameters[0].Value = Convert.ToString(maMB);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
-        public bool SuaMB(MayBay mb)
+        public void SuaMB(MayBay mb)
         {
             const string sql = "SuaMayBay @MaMayBay, @TenMayBay, @SoGhe";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -45,7 +45,7 @@ namespace DAO
             sqlParameters[2] = new SqlParameter("@SoGhe", SqlDbType.Int);
             sqlParameters[2].Value = Convert.ToString(mb.Soghe);
 
-           return  executeUpdateOrDeleteQuery(sql, sqlParameters);
+           executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
         public DataTable HienThi()
         {

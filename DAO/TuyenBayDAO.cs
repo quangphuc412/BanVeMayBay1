@@ -12,7 +12,7 @@ namespace DAO
     public class TuyenBayDAO : DBConnection
     {
         public TuyenBayDAO() : base() { }
-        public bool ThemTB(TuyenBay tb)
+        public void ThemTB(TuyenBay tb)
         {
             String sql;
             SqlParameter[] sqlParameters;
@@ -36,16 +36,16 @@ namespace DAO
                 sqlParameters[1] = new SqlParameter("@MaSanBayDen", SqlDbType.VarChar);
                 sqlParameters[1].Value = Convert.ToString(tb.Masanbayden);
             }
-            return executeInsertQuery(sql, sqlParameters);
+            executeInsertQuery(sql, sqlParameters);
         }
-        public bool XoaTB(String maTB)
+        public void XoaTB(String maTB)
         {
             const string sql = "XoaTuyenBay @MaTuyenBay";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@MaTuyenBay", SqlDbType.VarChar);
             sqlParameters[0].Value = Convert.ToString(maTB);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
         public DataTable HienThi()
         {

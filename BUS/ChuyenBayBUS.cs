@@ -16,17 +16,17 @@ namespace BUS
         {
             cbDAO = new ChuyenBayDAO();
         }
-        public bool ThemCB(ChuyenBay cb)
+        public void ThemCB(ChuyenBay cb)
         {
-            return cbDAO.ThemCB(cb);
+            cbDAO.ThemCB(cb);
         }
-        public bool XoaCB(String MaCB)
+        public void XoaCB(String MaCB)
         {
-            return cbDAO.XoaCB(MaCB);
+            cbDAO.XoaCB(MaCB);
         }
-        public bool SuaCB(ChuyenBay cb)
+        public void SuaCB(ChuyenBay cb)
         {
-            return cbDAO.SuaCB(cb);
+            cbDAO.SuaCB(cb);
         }
         public DataTable HienThi()
         {

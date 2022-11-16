@@ -16,13 +16,13 @@ namespace BUS
         {
             tbDAO = new TuyenBayDAO();
         }
-        public bool ThemTB(TuyenBay tb)
+        public void ThemTB(TuyenBay tb)
         {
-            return tbDAO.ThemTB(tb);
+            tbDAO.ThemTB(tb);
         }
-        public bool XoaTB(String MaTB)
+        public void XoaTB(String MaTB)
         {
-            return tbDAO.XoaTB(MaTB);
+            tbDAO.XoaTB(MaTB);
         }
         public DataTable HienThi()
         {

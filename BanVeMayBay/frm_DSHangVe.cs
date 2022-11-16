@@ -33,6 +33,15 @@ namespace BanVeMayBay
             dgvDSHangVe.AllowUserToAddRows = false;
             dgvDSHangVe.EditMode = DataGridViewEditMode.EditProgrammatically;
         }
+        private void LoadComboBoxMaChuyenBay()
+        {
+            ChuyenBayBUS cbBUS = new ChuyenBayBUS();
+            DataTable dt = new DataTable();
+            dt = cbBUS.HienThi();
+            cb_MaChuyenBay.DisplayMember = "MaChuyenBay";
+            cb_MaChuyenBay.ValueMember = "MaChuyenBay";
+            cb_MaChuyenBay.DataSource = dt;
+        }
         public bool IsNumber(string pValue)
         {
             foreach (Char c in pValue)
@@ -50,10 +59,10 @@ namespace BanVeMayBay
                 cb_TenHangVe.Focus();
                 return false;
             }
-            if (txt_MaChuyenBay.Text == "")
+            if (cb_MaChuyenBay.Text == "")
             {
-                MessageBox.Show("Nhập mã chuyến bay!");
-                txt_MaChuyenBay.Focus();
+                MessageBox.Show("Chọn mã chuyến bay!");
+                cb_MaChuyenBay.Focus();
                 return false;
             }
             if (txt_KhoiLuongHL.Text == "")
@@ -88,18 +97,21 @@ namespace BanVeMayBay
         public void Reset()
         {
             txt_MaHangVe.ResetText();
-            txt_MaHangVe.Enabled = true;
-            txt_MaChuyenBay.ResetText();
+            //txt_MaHangVe.Enabled = true;
             txt_KhoiLuongHL.ResetText();
             txt_DonGia.ResetText();
         }
         private void frm_DSHangVe_Load(object sender, EventArgs e)
         {
             XemHangVe();
+            LoadComboBoxMaChuyenBay();
+            cb_MaChuyenBay.SelectedIndex = -1;
+            txt_MaHangVe.Enabled = false;
         }
         private void dgvDSHangVe_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             string mahangve;
+            int dongia;
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = this.dgvDSHangVe.Rows[e.RowIndex];
@@ -114,11 +126,12 @@ namespace BanVeMayBay
                 {
                     cb_TenHangVe.Text = "HV02";
                 }
-                txt_MaChuyenBay.Text = row.Cells[1].Value.ToString();
+                cb_MaChuyenBay.Text = row.Cells[1].Value.ToString();
                 txt_KhoiLuongHL.Text = row.Cells[2].Value.ToString();
-                txt_DonGia.Text = row.Cells[3].Value.ToString();
+                dongia = Convert.ToInt32(row.Cells[3].Value);
+                txt_DonGia.Text = dongia.ToString();
                                                                                                                                                                                                         
-                txt_MaChuyenBay.Enabled = false;
+                cb_MaChuyenBay.Enabled = false;
                 txt_MaHangVe.Enabled = false;
             }
         }
@@ -127,16 +140,13 @@ namespace BanVeMayBay
             HangVeBUS hvBUS = new HangVeBUS();
             if (CheckNhapMB())
             {
-                hv = new HangVe(txt_MaHangVe.Text, cb_TenHangVe.Text, txt_MaChuyenBay.Text, Convert.ToInt32(txt_KhoiLuongHL.Text), Convert.ToInt32(txt_DonGia.Text));
-                if (hvBUS.ThemHV(hv))
-                {
-                    MessageBox.Show("Thêm hạng vé mới thành công!");
-                }
+                hv = new HangVe(txt_MaHangVe.Text, cb_TenHangVe.Text, cb_MaChuyenBay.Text, Convert.ToInt32(txt_KhoiLuongHL.Text), Convert.ToInt32(txt_DonGia.Text));
+                hvBUS.ThemHV(hv);
+                //MessageBox.Show("Thêm hạng vé mới thành công!");
                 Reset();
                 XemHangVe();
             }
         }
-
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
             HangVeBUS hvBUS = new HangVeBUS();
@@ -146,30 +156,24 @@ namespace BanVeMayBay
             }
             else
             {
-                if (hvBUS.XoaHV(txt_MaHangVe.Text))
-                {
-                    MessageBox.Show("Xóa hạng vé thành công!");
-                }
+                hvBUS.XoaHV(txt_MaHangVe.Text);
+                //MessageBox.Show("Xóa hạng vé thành công!");
                 Reset();
                 XemHangVe();
             }
         }
-
         private void btn_Sua_Click(object sender, EventArgs e)
         {
             HangVeBUS hvBUS = new HangVeBUS();
             if (CheckNhapMB())
             {
-                hv = new HangVe(txt_MaHangVe.Text, cb_TenHangVe.Text, txt_MaChuyenBay.Text, Convert.ToInt32(txt_KhoiLuongHL.Text), Convert.ToInt32(txt_DonGia.Text));
-                if (hvBUS.SuaHV(hv))
-                {
-                    MessageBox.Show("Cập nhật hạng vé thành công!");
-                }
+                hv = new HangVe(txt_MaHangVe.Text, cb_TenHangVe.Text, cb_MaChuyenBay.Text, Convert.ToInt32(txt_KhoiLuongHL.Text), Convert.ToInt32(txt_DonGia.Text));
+                hvBUS.SuaHV(hv);
+                //MessageBox.Show("Cập nhật hạng vé thành công!");
                 Reset();
                 XemHangVe();
             }
         }
-
         private void btn_TimKiem_Click(object sender, EventArgs e)
         {
             if (txt_TimKiemMaHangVe.Text == "")

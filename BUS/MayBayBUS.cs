@@ -16,17 +16,17 @@ namespace BUS
         {
             mbDAO = new MayBayDAO();
         }
-        public bool ThemMB(MayBay mb)
+        public void ThemMB(MayBay mb)
         {
-            return mbDAO.ThemMB(mb);
+            mbDAO.ThemMB(mb);
         }
-        public bool XoaMB(String MaMB)
+        public void XoaMB(String MaMB)
         {
-            return mbDAO.XoaMB(MaMB);
+            mbDAO.XoaMB(MaMB);
         }
-        public bool SuaMB(MayBay mb)
+        public void SuaMB(MayBay mb)
         {
-            return mbDAO.SuaMB(mb);
+            mbDAO.SuaMB(mb);
         }
         public DataTable HienThi()
         {

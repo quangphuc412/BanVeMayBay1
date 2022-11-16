@@ -145,12 +145,10 @@ namespace BanVeMayBay
             SanBayBUS sbBUS = new SanBayBUS();
             if (CheckNhapSB())
             {
-                if(sbBUS.ThemSB(sb))
-                {
-                    MessageBox.Show("Thêm sân bay mới thành công!");
-                    Reset();
-                    XemSanBay();
-                }      
+                sbBUS.ThemSB(sb);
+                //MessageBox.Show("Thêm sân bay mới thành công!");
+                Reset();
+                XemSanBay();    
             }
         }
         private void btn_XoaSB_Click(object sender, EventArgs e)
@@ -162,12 +160,10 @@ namespace BanVeMayBay
             }
             else
             {
-                if(sbBUS.XoaSB(txt_MaSanBay.Text))
-                {
-                    MessageBox.Show("Xóa sân bay thành công!");
-                    Reset();
-                    XemSanBay();
-                }    
+                sbBUS.XoaSB(txt_MaSanBay.Text);
+                //MessageBox.Show("Xóa sân bay thành công!");
+                Reset();
+                XemSanBay();
             }
         }
         private void btn_SuaSB_Click(object sender, EventArgs e)
@@ -180,12 +176,10 @@ namespace BanVeMayBay
             }
             else
             {
-                if(sbBUS.SuaSB(sb))
-                {
-                    MessageBox.Show("Cập nhật sân bay thành công!");
-                    Reset();
-                    XemSanBay();
-                }     
+                sbBUS.SuaSB(sb);
+                //MessageBox.Show("Cập nhật sân bay thành công!");
+                Reset();
+                XemSanBay();
             }
         }
         private void btn_TimKiemSB_Click(object sender, EventArgs e)
@@ -238,12 +232,10 @@ namespace BanVeMayBay
         {
             tb = new TuyenBay(txt_MaTuyenBay.Text, cb_MaSanBayDi.Text, cb_MaSanBayDen.Text, cb_MaSanBayTG.Text);
             TuyenBayBUS tbBUS = new TuyenBayBUS();
-            if (tbBUS.ThemTB(tb))
-            {
-                MessageBox.Show("Thêm tuyến bay mới thành công!");
-                Reset();
-                XemTuyenBay();
-            }
+            tbBUS.ThemTB(tb);
+            //MessageBox.Show("Thêm tuyến bay mới thành công!");
+            Reset();
+            XemTuyenBay();
         }
         private void btn_XoaTB_Click(object sender, EventArgs e)
         {
@@ -254,12 +246,10 @@ namespace BanVeMayBay
             }
             else
             {
-                if (tbBUS.XoaTB(txt_MaTuyenBay.Text))
-                {
-                    MessageBox.Show("Xóa sân bay thành công!");
-                    Reset();
-                    XemTuyenBay();
-                }
+                tbBUS.XoaTB(txt_MaTuyenBay.Text);
+                //MessageBox.Show("Xóa sân bay thành công!");
+                Reset();
+                XemTuyenBay();
             }
         }
         private void btn_TimKiemTB_Click(object sender, EventArgs e)

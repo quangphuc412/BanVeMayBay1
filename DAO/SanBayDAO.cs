@@ -13,7 +13,7 @@ namespace DAO
     public class SanBayDAO : DBConnection
     {
         public SanBayDAO() : base() { }
-        public bool ThemSB(SanBay sb)
+        public void ThemSB(SanBay sb)
         {
             const string sql = "ThemSanBay @MaSanBay, @TenSanBay, @ViTri";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -24,18 +24,18 @@ namespace DAO
             sqlParameters[2] = new SqlParameter("@ViTri", SqlDbType.NVarChar);
             sqlParameters[2].Value = Convert.ToString(sb.ViTri);
 
-            return executeInsertQuery(sql, sqlParameters);
+            executeInsertQuery(sql, sqlParameters);
         }
-        public bool XoaSB(String maSB)
+        public void XoaSB(String maSB)
         {
             const string sql = "XoaSanBay @MaSanBay";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@MaSanBay", SqlDbType.VarChar);
             sqlParameters[0].Value = Convert.ToString(maSB);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
-        public bool SuaSB(SanBay sb)
+        public void SuaSB(SanBay sb)
         {
             const string sql = "SuaSanBay @MaSanBay, @TenSanBay, @ViTri";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -46,7 +46,7 @@ namespace DAO
             sqlParameters[2] = new SqlParameter("@ViTri", SqlDbType.NVarChar);
             sqlParameters[2].Value = Convert.ToString(sb.ViTri);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
         public DataTable HienThi()
         {

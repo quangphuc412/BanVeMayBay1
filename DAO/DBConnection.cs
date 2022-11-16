@@ -27,21 +27,20 @@ namespace DAO
             }
             return connection;
         }
-        public bool executeInsertQuery(String query, SqlParameter[] sqlParameter)
+        public void executeInsertQuery(String query, SqlParameter[] sqlParameter)
         {
             using (SqlCommand sqlCommand = new SqlCommand(query, openConnection()))
             {
                 sqlCommand.CommandType = CommandType.Text;
                 sqlCommand.Parameters.AddRange(sqlParameter);
+                openConnection().InfoMessage += Cnn_infomessage;
                 try
                 {
                     sqlCommand.ExecuteNonQuery();
-                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    return false;
                 }
                 finally
                 {
@@ -49,10 +48,11 @@ namespace DAO
                 }
             }
         }
-        public bool executeUpdateOrDeleteQuery(String query, SqlParameter[] sqlParameter)
+        public void executeUpdateOrDeleteQuery(String query, SqlParameter[] sqlParameter)
         {
             using (SqlCommand sqlCommand = new SqlCommand(query, openConnection()))
             {
+                openConnection().InfoMessage += Cnn_infomessage;
                 int i = 0;
                 try
                 {
@@ -62,12 +62,10 @@ namespace DAO
                         i++;
                     }
                     sqlCommand.ExecuteNonQuery();
-                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    return false;
                 }
                 finally
                 {
@@ -126,6 +124,10 @@ namespace DAO
                 }
                 return dt;
             }
+        }
+        private void Cnn_infomessage(object sender, SqlInfoMessageEventArgs e)
+        {
+            MessageBox.Show(e.Message);
         }
     }
 }

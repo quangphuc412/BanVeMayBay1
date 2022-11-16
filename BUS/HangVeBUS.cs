@@ -16,17 +16,17 @@ namespace BUS
         {
             hvDAO = new HangVeDAO();
         }
-        public bool ThemHV(HangVe hv)
+        public void ThemHV(HangVe hv)
         {
-            return hvDAO.ThemHV(hv);
+            hvDAO.ThemHV(hv);
         }
-        public bool XoaHV(String MaHV)
+        public void XoaHV(String MaHV)
         {
-            return hvDAO.XoaHV(MaHV);
+            hvDAO.XoaHV(MaHV);
         }
-        public bool SuaHV(HangVe hv)
+        public void SuaHV(HangVe hv)
         {
-            return hvDAO.SuaHV(hv);
+            hvDAO.SuaHV(hv);
         }
         public DataTable HienThi()
         {

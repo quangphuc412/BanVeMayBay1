@@ -13,7 +13,7 @@ namespace DAO
     {
         public ChuyenBayDAO() : base() { }
 
-        public bool ThemCB(ChuyenBay cb)
+        public void ThemCB(ChuyenBay cb)
         {
             const string sql = "ThemChuyenBay @NgayBay, @GioKhoiHanh, @ThoiGianBay, @ThoiGianDen, @SoGheHang1, @SoGheHang2, @MaTuyenBay, @MaMayBay";
             SqlParameter[] sqlParameters = new SqlParameter[8];
@@ -34,18 +34,18 @@ namespace DAO
             sqlParameters[7] = new SqlParameter("@MaMayBay", SqlDbType.VarChar);
             sqlParameters[7].Value = Convert.ToString(cb.Mamaybay);
 
-            return executeInsertQuery(sql, sqlParameters);
+            executeInsertQuery(sql, sqlParameters);
         }
-        public bool XoaCB(String maCB)
+        public void XoaCB(String maCB)
         {
             const string sql = "XoaChuyenBay @MaChuyenBay";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@MaChuyenBay", SqlDbType.VarChar);
             sqlParameters[0].Value = Convert.ToString(maCB);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
-        public bool SuaCB(ChuyenBay cb)
+        public void SuaCB(ChuyenBay cb)
         {
             const string sql = "SuaChuyenBay @MaChuyenBay, @ThoiGianBay, @ThoiGianDen, @SoGheHang1, @SoGheHang2, @MaMayBay";
             SqlParameter[] sqlParameters = new SqlParameter[6];
@@ -62,7 +62,7 @@ namespace DAO
             sqlParameters[5] = new SqlParameter("@MaMayBay", SqlDbType.VarChar);
             sqlParameters[5].Value = Convert.ToString(cb.Mamaybay);
 
-            return executeUpdateOrDeleteQuery(sql, sqlParameters);
+            executeUpdateOrDeleteQuery(sql, sqlParameters);
         }
         public DataTable HienThi()
         {
