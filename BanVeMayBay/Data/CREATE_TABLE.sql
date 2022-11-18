@@ -97,7 +97,7 @@ KHACHHANG_CMND varchar(20) REFERENCES KHACHHANG(CMND)
 go
 
 CREATE TABLE VECHUYENBAY(
-MaVeChuyenBay varchar(20)PRIMARY KEY not null,
+MaVeChuyenBay varchar(30)PRIMARY KEY not null,
 CHUYENBAY_MaChuyenBay varchar(20) REFERENCES CHUYENBAY(MaChuyenBay),
 SoLuongVe int,
 TinhTrangVe nvarchar(10),

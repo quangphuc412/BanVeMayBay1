@@ -23,6 +23,7 @@ begin
 	     INSERT INTO SANBAY
        SELECT MaSanBay, TenSanBay, ViTri
        FROM inserted
+	   PRINT N'Them San Bay Thanh Cong!'
 	END
 end
 go
@@ -63,6 +64,7 @@ begin
 				ELSE
 				BEGIN
 					DELETE FROM SANBAY WHERE MaSanBay IN (SELECT MaSanBay FROM deleted)
+					PRINT N'Xoa San Bay Thanh Cong!'
 				END
 			END
 		END
@@ -93,6 +95,7 @@ begin
 		set @TenSanBay = (select TenSanBay from inserted)
 		set @ViTri = (select ViTri from inserted)
 		update SANBAY set TenSanBay=@TenSanBay, ViTri=@ViTri where MaSanBay=@MaSanBay
+		PRINT N'Cap Nhat San Bay Thanh Cong!'
 	END
 	ELSE
 	BEGIN
@@ -154,6 +157,7 @@ begin
 	     INSERT INTO TUYENBAY
        SELECT MaTuyenBay, SANBAYDI_MaSanBay, SANBAYDEN_MaSanBay, SANBAYTRUNGGIAN_MaSanBay
        FROM inserted
+	   PRINT N'Them Tuyen Bay Thanh Cong!'
 	END
 end
 go
@@ -184,6 +188,7 @@ begin
 		ELSE
 		BEGIN
 			DELETE FROM TUYENBAY WHERE MaTuyenBay IN (SELECT MaTuyenBay FROM deleted)
+			PRINT N'Xoa Tuyen Bay Thanh Cong!'
 		END
 	END
 	ELSE
@@ -231,6 +236,7 @@ begin
 	     INSERT INTO MAYBAY
        SELECT MaMayBay, LoaiMayBay, SoGhe
        FROM inserted
+	   PRINT N'Them May Bay Thanh Cong!'
 	END
 end
 go
@@ -254,6 +260,7 @@ begin
 		set @LoaiMayBay = (select LoaiMayBay from inserted)
 		set @SoGhe = (select SoGhe from inserted)
 		update MAYBAY set LoaiMayBay=@LoaiMayBay, SoGhe=@SoGhe where MaMayBay=@MaMayBay
+		PRINT N'Cap Nhat May Bay Thanh Cong!'
 	END
 	ELSE
 	BEGIN
@@ -285,6 +292,7 @@ begin
 		ELSE
 		BEGIN
 			DELETE FROM MAYBAY WHERE MaMayBay IN (SELECT MaMayBay FROM deleted)
+			PRINT N'Xoa May Bay Thanh Cong!'
 		END
 	END
 	ELSE
@@ -378,6 +386,7 @@ begin
 	   INSERT INTO CHUYENBAY 
 	   SELECT MaChuyenBay, NgayBay, GioKhoiHanh, ThoiGianBay, ThoiGianDuKienDen, SoGheHang1, SoGheHang2, TUYENBAY_MaTuyenBay, MaMayBay 
 	   FROM inserted
+	   PRINT N'Them Chuyen Bay Thanh Cong!'
 	END
 end
 go
@@ -415,6 +424,7 @@ begin
 			ELSE
 			BEGIN
 				DELETE FROM CHUYENBAY WHERE MaChuyenBay IN (SELECT MaChuyenBay FROM deleted)
+				PRINT N'Xoa Chuyen Bay Thanh Cong!'
 			END 
 		END
 	END
@@ -450,6 +460,7 @@ begin
 		update CHUYENBAY 
 		 set ThoiGianBay=@ThoiGianBay, ThoiGianDuKienDen=@ThoiGianDen, SoGheHang1=@SoGheH1, SoGheHang2=@SoGheH2, MaMayBay=@MaMayBay 
 		 where MaChuyenBay=@MaChuyenBay
+		 PRINT N'Cap Nhat Chuyen Bay Thanh Cong!'
 	END
 	ELSE
 	 BEGIN
@@ -508,6 +519,7 @@ begin
 		INSERT INTO HANGVE 
 		SELECT MaHangVe, VECHUYENBAY, KhoiLuongToiDa, DonGia 
 		FROM inserted
+			   PRINT N'Them Hang Ve Thanh Cong!'
 	END
 end
 go
@@ -538,6 +550,7 @@ begin
 		ELSE
 		BEGIN
 			DELETE FROM HANGVE WHERE MaHangVe IN (SELECT MaHangVe FROM deleted)
+			PRINT N'Xoa Hang Ve Thanh Cong!'
 		END
 	END
 	ELSE
@@ -569,6 +582,7 @@ begin
 		update HANGVE 
 		 set KhoiLuongToiDa=@KhoiLuongToiDa, DonGia=@DonGia 
 		 where MaHangVe=@MaHangVe
+		 PRINT N'Cap Nhat Hang Ve Thanh Cong!'
 	END
 	ELSE
 	 BEGIN
@@ -598,11 +612,119 @@ begin
 end
 go
 
---TimHangVe 'SGN-HAN_081120220600_HV02'
-
-create view XemHoaDon as
-select * from HOADON
+--------------------DANH SACH VE--------------------
+create view XemVeChuyenBay as
+select * from VECHUYENBAY
 go
 
-select * from XemHangVe
+select * from XemVeChuyenBay
+go
+
+create function TaoMaVeChuyenBay(@MaChuyenBay varchar(20))
+returns varchar(22)
+as
+begin
+	declare @MaVeCB varchar(22)
+	 set @MaVeCB = concat(@MaChuyenBay, 'MV')
+	return @MaVeCB
+end
+go
+
+create trigger TriggerThemVeChuyenBay on VECHUYENBAY
+instead of insert
+as
+begin
+	IF EXISTS (SELECT * FROM inserted WHERE MaVeChuyenBay IN (SELECT MaVeChuyenBay FROM VECHUYENBAY))
+	BEGIN
+		PRINT N'Ma Ve Chuyen Bay Da Ton Tai!'
+		ROLLBACK TRANSACTION 
+	END
+	ELSE
+	BEGIN
+	     INSERT INTO VECHUYENBAY
+       SELECT MaVeChuyenBay, CHUYENBAY_MaChuyenBay, SoLuongVe, TinhTrangVe
+       FROM inserted
+	   PRINT N'Them Ve Chuyen Bay Thanh Cong!'
+	END
+end
+go
+
+create proc ThemVeChuyenBay
+@MaChuyenBay varchar(20), @SoLuongVe int, @TinhTrangVe nvarchar(10)
+as
+begin
+	declare @MaVeChuyenBay char(30)
+	set @MaVeChuyenBay = dbo.TaoMaVeChuyenBay(@MaChuyenBay)
+	insert into VECHUYENBAY values(@MaVeChuyenBay, @MaChuyenBay, @SoLuongVe, @TinhTrangVe)
+end
+go
+
+create trigger TriggerXoaVeChuyenBay on VECHUYENBAY
+instead of delete
+as
+begin
+	IF EXISTS (SELECT * FROM deleted WHERE MaVeChuyenBay IN (SELECT MaVeChuyenBay FROM VECHUYENBAY))
+	BEGIN
+		DELETE FROM VECHUYENBAY WHERE MaVeChuyenBay IN (SELECT MaVeChuyenBay FROM deleted)
+		PRINT N'Xoa Ve Chuyen Bay Thanh Cong!'
+	END
+	ELSE
+	BEGIN
+		PRINT N'Ma Ve Chuyen Bay Khong Ton Tai!'
+	END
+end
+go
+
+create proc XoaVeChuyenBay
+@MaVeChuyenBay varchar(30)
+as
+begin
+	delete from VECHUYENBAY where MaVeChuyenBay=@MaVeChuyenBay
+end
+go
+
+create trigger TriggerSuaVeChuyenBay on VECHUYENBAY
+instead of update
+as
+begin
+	DECLARE @MaVeChuyenBay varchar(30), @SoLuongVe int, @TinhTrangVe nvarchar(10)
+	IF EXISTS (SELECT * FROM inserted WHERE MaVeChuyenBay IN (SELECT MaVeChuyenBay FROM VECHUYENBAY))
+	BEGIN
+		set @MaVeChuyenBay = (select MaVeChuyenBay from inserted)
+		set @SoLuongVe = (select SoLuongVe from inserted)
+		set @TinhTrangVe = (select TinhTrangVe from inserted)
+		update VECHUYENBAY set SoLuongVe=@SoLuongVe, TinhTrangVe=@TinhTrangVe where MaVeChuyenBay=@MaVeChuyenBay
+		PRINT N'Cap Nhat Ve Chuyen Bay Thanh Cong!'
+	END
+	ELSE
+	BEGIN
+		PRINT N'Ma Ve Chuyen Bay Khong Ton Tai!'
+		ROLLBACK TRANSACTION 
+	END
+end
+go
+
+create proc SuaVeChuyenBay
+@MaVeChuyenBay varchar(30), @SoLuongVe int, @TinhTrangVe nvarchar(10)
+as
+begin
+	update VECHUYENBAY set SoLuongVe=@SoLuongVe, TinhTrangVe=@TinhTrangVe where MaVeChuyenBay=@MaVeChuyenBay
+end
+go
+
+create proc TimVeChuyenBay
+@MaVeChuyenBay varchar(30)
+as
+begin
+	IF EXISTS (SELECT MaVeChuyenBay FROM VECHUYENBAY where MaVeChuyenBay=@MaVeChuyenBay)
+	BEGIN
+		select * from VECHUYENBAY where MaVeChuyenBay=@MaVeChuyenBay
+		PRINT N'Tim Kiem Ve Chuyen Bay Thanh Cong!'
+	END
+	ELSE
+	BEGIN
+		PRINT N'Ma Ve Chuyen Bay Khong Ton Tai!'
+		ROLLBACK TRANSACTION 
+	END
+end
 go
